@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+"""Redraw the banner in public/index.html from logo.txt.
+
+The banner used to be a <pre>, the way omarchy.org draws its logo, but at the
+font sizes a phone lands on, Chrome's per-glyph rounding knocks the rows out of
+column and the word turns to mush. So the same art is emitted as vector
+geometry instead: identical shapes, no font, no rounding.
+
+Geometry is JetBrains Mono's, in 1/1000 em, so it matches what the <pre> was
+meant to look like — the block glyphs fill 0-600 across and -300 to 1020 up,
+half blocks split at 360, and the columns step by the 600 advance less
+omarchy-site's 0.0425em of tracking.
+"""
+
+import pathlib, re
+
+ADVANCE, TRACKING = 600, 42.5
+STEP = ADVANCE - TRACKING
+PITCH = 1093.75                        # line-height 1.09375em
+BASELINE = (PITCH - 1320) / 2 + 1020   # half-leading + hhea ascender
+TOP, SPLIT, BOTTOM = 1020, 360, -300
+
+# x offset, width, y top, y bottom — in font units, relative to the baseline.
+INK = {
+    '█': (0, ADVANCE, TOP, BOTTOM),      # full block
+    '▀': (0, ADVANCE, TOP, SPLIT),       # upper half
+    '▄': (0, ADVANCE, SPLIT, BOTTOM),    # lower half
+    '▌': (0, ADVANCE / 2, TOP, BOTTOM),  # left half
+}
+
+root = pathlib.Path(__file__).resolve().parent.parent
+rows = root.joinpath('logo.txt').read_text().rstrip('\n').split('\n')
+
+rects = []
+for r, row in enumerate(rows):
+    baseline = r * PITCH + BASELINE
+    c = 0
+    while c < len(row):
+        ink = INK.get(row[c])
+        if not ink:
+            c += 1
+            continue
+        # Merge each run of like glyphs into one rectangle, and let the
+        # rectangles overlap the way the glyphs themselves do — a single path
+        # fills as one region, so no hairlines show between them.
+        start = c
+        while c + 1 < len(row) and row[c + 1] == row[start]:
+            c += 1
+        offset, width, top, bottom = ink
+        rects.append((start * STEP + offset,
+                      baseline - top,
+                      (c - start) * STEP + width,
+                      top - bottom))
+        c += 1
+
+def num(v):
+    return f'{v:.4f}'.rstrip('0').rstrip('.')
+
+path = ''.join(f'M{num(x)} {num(y)}h{num(w)}v{num(h)}h-{num(w)}z' for x, y, w, h in rects)
+x0 = min(x for x, _, _, _ in rects)
+y0 = min(y for _, y, _, _ in rects)
+x1 = max(x + w for x, _, w, _ in rects)
+y1 = max(y + h for _, y, _, h in rects)
+view = ' '.join(num(v) for v in (x0, y0, x1 - x0, y1 - y0))
+
+svg = (f'<svg class="logo" viewBox="{view}" role="img" aria-label="Oligarchy" '
+       f'xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="{path}"/></svg>')
+
+index = root / 'public/index.html'
+html = index.read_text()
+html, n = re.subn(r'(?<=<!-- logo:start -->\n  ).*(?=\n  <!-- logo:end -->)', svg.replace('\\', '\\\\'), html, flags=re.S)
+if n != 1:
+    raise SystemExit('build-logo: no logo:start/logo:end markers in public/index.html')
+index.write_text(html)
+print(f'{len(rects)} rectangles, {len(svg)} bytes')

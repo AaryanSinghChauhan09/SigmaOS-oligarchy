@@ -6,9 +6,8 @@ model — billionaire money in, free operating system out.
 
 Colors and type are lifted from omarchy-site's `assets/css/root.css`
 (Tokyo Night, JetBrains Mono), and `public/fonts/` holds copies of the two
-woff2s it ships. Self-hosted rather than pulled from Google Fonts: a swapped
-fallback reflows the page, and the banner's alignment depends on the exact
-metrics.
+woff2s it ships. Self-hosted rather than pulled from Google Fonts, so a
+swapped fallback never reflows the page.
 
 ## Deploying
 
@@ -26,16 +25,18 @@ still land on the joke.
 
 ## Editing the copy
 
-`logo.txt` and `taglines.txt` are the sources; `public/index.html` has both
-inlined. Change a source, then re-inline by hand — there's no build step, and
-one page doesn't justify one.
+`logo.txt` and `taglines.txt` are the sources. Run `bin/build-logo` after
+editing the banner; taglines are a plain array in `public/index.html`, edited
+by hand.
 
-The banner's size, tracking and leading are omarchy-site's `.pre pre` verbatim,
-so it renders identically to the logo on omarchy.org. Only the clamp floor
-differs — this banner is 100 columns to OMARCHY's 81, so it has to shrink
-further before it fits a phone. A wider replacement needs that floor lowered
-again. It's left-aligned inside a centered box on purpose: centering the text
-trims each line's trailing spaces and knocks the rows out of column.
+The banner is vector rather than a `<pre>`, which is how omarchy.org draws its
+logo. At the type sizes a phone lands on — around 5px, since this banner is 100
+columns to OMARCHY's 81 — Chrome's per-glyph rounding walks the rows out of
+column and the word turns to mush. `bin/build-logo` emits the same art as one
+SVG path instead, using JetBrains Mono's own geometry (block glyphs fill the
+full 0.6em advance and −0.3 to 1.02em vertically, half blocks split at 0.36em)
+and omarchy-site's 0.0425em of tracking. So it draws what the `<pre>` was meant
+to look like, at any size, on any device.
 
 Taglines are held to two lines. The box is a fixed `3em` and the measure a flat
 `40ch` — the widest that still wraps the longest tagline into two — so the
