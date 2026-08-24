@@ -1,0 +1,15 @@
+{
+  "name": "oligarchy",
+  "compatibility_date": "2026-08-24",
+  "workers_dev": false,
+  "assets": {
+    "directory": "./public",
+    // Any path on the domain shows the page rather than a 404 — it's a typo
+    // catcher, so /patrons and /donate should still land somewhere sensible.
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    { "pattern": "oligarchy.fyi/*",   "zone_name": "oligarchy.fyi" },
+    { "pattern": "*.oligarchy.fyi/*", "zone_name": "oligarchy.fyi" }
+  ]
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oligarchy — elite capital, public code</title>
+<meta name="description" content="Elite capital. Public code.">
+<link rel="icon" href="https://omarchy.org/assets/images/favicon.png">
+<link rel="preload" href="fonts/JetBrainsMono-Light.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Self-hosted rather than pulled from Google Fonts: these are the same
+     woff2s omarchy-site ships, and a swapped fallback would reflow the whole
+     page. Light blocks (it's the banner), Bold swaps (it's one link). */
+  @font-face {
+    font-display: block;
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 300;
+    src: url('fonts/JetBrainsMono-Light.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 700;
+    src: url('fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  }
+
+  /* Palette lifted from omarchy-site/assets/css/root.css (Tokyo Night). */
+  :root {
+    --background: rgb(26, 27, 38);
+    --blue:       rgb(122, 162, 247);
+    --cyan:       rgb(125, 207, 255);
+    --green:      rgb(158, 206, 106);
+    --white:      rgb(255, 255, 255);
+    --font-family: 'JetBrains Mono', monospace;
+    --transition: 0.15s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { color-scheme: dark; }
+
+  body {
+    background: var(--background);
+    color: var(--blue);
+    font-family: var(--font-family);
+    font-weight: 300;
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    padding: 2em 1em;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  /* Type size, tracking and leading are omarchy-site's .pre pre verbatim —
+     the negative tracking is what closes the seams between block glyphs. Only
+     the clamp floor differs: this banner is 100 columns to OMARCHY's 81, so it
+     needs to shrink further before it fits a phone. */
+  .logo {
+    color: var(--green);
+    font-size: clamp(0.32rem, 1.25vw, 1rem);
+    letter-spacing: -0.0425em;
+    line-height: 1.09375;
+    /* Centred as a block, not per line: centring the text would trim each
+       line's trailing spaces and knock the rows out of column. */
+    text-align: left;
+    white-space: pre;
+  }
+
+  /* Two lines are reserved whatever the tagline, so rotation never moves the
+     page. 40ch is the widest measure that still wraps the longest line into
+     two, and the vw term keeps that 40ch inside the viewport on phones. */
+  .tagline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3em;
+    font-size: min(3.5vw, 1.5rem);
+    max-width: 40ch;
+    transition: opacity 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  .tagline.fading { opacity: 0; }
+
+  a {
+    color: var(--cyan);
+    font-weight: 700;
+    font-size: clamp(0.875rem, 1.75vw, 1rem);
+    text-decoration-thickness: 0.0875em;
+    text-underline-offset: 0.25em;
+    transition: color var(--transition);
+  }
+
+  @media (hover: hover) {
+    a:hover { color: var(--white); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tagline { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <pre class="logo" role="img" aria-label="Oligarchy"> ▄██████▄   ▄█        ▄█     ▄██████▄     ▄████████    ▄████████  ▄████████    ▄█    █▄    ▄██   ▄  
+███    ███ ███       ███    ███    ███   ███    ███   ███    ███ ███    ███   ███    ███   ███   ██▄
+███    ███ ███       ███▌   ███    █▀    ███    ███   ███    ███ ███    █▀    ███    ███   ███▄▄▄███
+███    ███ ███       ███▌  ▄███          ███    ███  ▄███▄▄▄▄██▀ ███         ▄███▄▄▄▄███▄▄ ▀▀▀▀▀▀███
+███    ███ ███       ███▌ ▀▀███ ████▄  ▀███████████ ▀▀███▀▀▀▀▀   ███        ▀▀███▀▀▀▀███▀  ▄██   ███
+███    ███ ███       ███    ███    ███   ███    ███ ▀███████████ ███    █▄    ███    ███   ███   ███
+███    ███ ███▌    ▄ ███    ███    ███   ███    ███   ███    ███ ███    ███   ███    ███   ███   ███
+ ▀██████▀  █████▄▄██ █▀     ████████▀    ███    █▀    ███    ███ ████████▀    ███    █▀     ▀█████▀ 
+           ▀                                          ███    ███                                    </pre>
+  <p class="tagline" aria-live="polite">Elite capital. Public code.</p>
+  <a href="https://omarchy.org/">omarchy.org&nbsp;&rarr;</a>
+  <script>
+    const taglines = [
+      "Elite capital. Public code.",
+      "From the 0.001% to /home/you.",
+      "Redistributing billionaire wealth, one ISO at a time.",
+      "Billionaire-grade Linux. Zero-dollar pricing.",
+      "Billionaires in. Tarballs out.",
+      "Free software. Expensive patrons.",
+      "Free as in speech. Free as in billionaires paid for it.",
+      "Capitalism funded it. Everyone gets it.",
+      "The distro with no business model and excellent capitalization.",
+      "An operating system with patrons, not customers.",
+      "Burning billionaire money so you don't have to configure Arch.",
+      "Your free operating system, brought to you by unreasonable amounts of money.",
+      "Zero dollars. Several billionaires."
+    ];
+
+    const el = document.querySelector('.tagline');
+    let i = Math.floor(Math.random() * taglines.length);
+    el.textContent = taglines[i];
+
+    setInterval(() => {
+      el.classList.add('fading');
+      setTimeout(() => {
+        i = (i + 1) % taglines.length;
+        el.textContent = taglines[i];
+        el.classList.remove('fading');
+      }, 400);
+    }, 4000);
+  </script>
+</body>
+</html>
