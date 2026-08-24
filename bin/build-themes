@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""Refresh the colour schemes in public/index.html from Omarchy's themes.
+
+Reads every theme Omarchy ships by default and maps its colors.toml onto the
+five colours this page uses. Nothing is invented — clicking the banner shows
+you the theme as the theme defines itself, dim links and all.
+
+    bin/build-themes [path-to-omarchy/themes]
+"""
+
+import pathlib, re, sys
+
+DEFAULT = pathlib.Path('/usr/share/omarchy/themes')
+# background, banner, tagline, link, link hover, banner hover.
+ROLES = ['background', 'green', 'blue', 'bright_cyan', 'bright_foreground', 'accent']
+
+root = pathlib.Path(__file__).resolve().parent.parent
+themes = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT
+if not themes.is_dir():
+    raise SystemExit(f'build-themes: no themes in {themes}')
+
+rows = []
+for theme in sorted(themes.iterdir()):
+    colors = theme / 'colors.toml'
+    if not colors.is_file():
+        continue
+    # The files are flat `key = "value"`, so no TOML parser is needed.
+    values = dict(re.findall(r'^\s*(\w+)\s*=\s*"([^"]*)"', colors.read_text(), re.M))
+    missing = [r for r in ROLES if r not in values]
+    if missing:
+        print(f'skipping {theme.name}: no {", ".join(missing)}', file=sys.stderr)
+        continue
+    fields = [theme.name, values.get('mode', 'dark')] + [values[r].lower() for r in ROLES]
+    rows.append('      [' + ','.join(f'"{f}"' for f in fields) + '],')
+
+index = root / 'public/index.html'
+html = index.read_text()
+html, n = re.subn(r'(?<=// themes:start\n).*(?=      // themes:end)',
+                  '\n'.join(rows) + '\n', html, flags=re.S)
+if n != 1:
+    raise SystemExit('build-themes: no themes:start/themes:end markers in public/index.html')
+index.write_text(html)
+print(f'{len(rows)} themes from {themes}')

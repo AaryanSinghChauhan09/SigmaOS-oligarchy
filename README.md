@@ -4,8 +4,9 @@ A Cloudflare Worker serving one static page for `oligarchy.fyi`: the OLIGARCHY
 banner over a tagline that rotates through the pitch for Omarchy's patronage
 model — billionaire money in, free operating system out.
 
-Colors and type are lifted from omarchy-site's `assets/css/root.css`
-(Tokyo Night, JetBrains Mono), and `public/fonts/` holds copies of the two
+It opens in Omarchy's tokyo-night, the theme omarchy-site is painted in, and
+clicking the banner cycles the other 21 themes Omarchy ships. Type is
+JetBrains Mono, and `public/fonts/` holds copies of the two
 woff2s it ships. Self-hosted rather than pulled from Google Fonts, so a
 swapped fallback never reflows the page.
 
@@ -22,6 +23,20 @@ contacted.
 
 Unmatched paths serve the same page rather than a 404, so mistyped deep links
 still land on the joke.
+
+## Colour schemes
+
+`bin/build-themes` reads every theme in `/usr/share/omarchy/themes` (pass
+another path as an argument) and inlines the palettes into
+`public/index.html`. Each theme's `colors.toml` maps onto the five colours the
+page uses: `background`, `green` for the banner, `blue` for the tagline,
+`bright_cyan` for the link and `bright_foreground` for its hover, plus `accent`
+for the banner's own hover.
+
+Nothing is adjusted for legibility — a theme is shown as it defines itself.
+That means `rose-pine` and `flexoki-light` render their link below 3:1 against
+their own backgrounds, and a few dark themes keep taglines around 4:1. Picking
+friendlier slots would mean showing colours those themes don't actually use.
 
 ## Editing the copy
 

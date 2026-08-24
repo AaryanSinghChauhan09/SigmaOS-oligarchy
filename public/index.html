@@ -6,6 +6,7 @@
 <title>Oligarchy</title>
 <meta name="description" content="Elite capital. Public code.">
 <link rel="icon" href="https://omarchy.org/assets/images/favicon.png">
+<meta name="theme-color" content="#1a1b26">
 <link rel="preload" href="fonts/JetBrainsMono-Light.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   /* Self-hosted rather than pulled from Google Fonts: these are the same
@@ -27,13 +28,16 @@
     src: url('fonts/JetBrainsMono-Bold.woff2') format('woff2');
   }
 
-  /* Palette lifted from omarchy-site/assets/css/root.css (Tokyo Night). */
+  /* Omarchy's tokyo-night, the same theme omarchy-site is painted in.
+     Clicking the banner swaps these for another of Omarchy's default themes —
+     see bin/build-themes for where the values come from. */
   :root {
-    --background: rgb(26, 27, 38);
-    --blue:       rgb(122, 162, 247);
-    --cyan:       rgb(125, 207, 255);
-    --green:      rgb(158, 206, 106);
-    --white:      rgb(255, 255, 255);
+    --background: #1a1b26;
+    --green:      #9ece6a;
+    --blue:       #7aa2f7;
+    --cyan:       #0db9d7;
+    --white:      #c0caf5;
+    --accent:     #7aa2f7;
     --font-family: 'JetBrains Mono', monospace;
     --transition: 0.15s cubic-bezier(0.33, 1, 0.68, 1);
   }
@@ -58,6 +62,7 @@
     padding: 2em 1em;
     text-align: center;
     text-wrap: balance;
+    transition: background-color var(--transition), color var(--transition);
   }
 
   /* Vector, not a <pre>: at the sizes a phone lands on, Chrome's per-glyph
@@ -65,11 +70,26 @@
      geometry is JetBrains Mono's own, so it draws what the <pre> was meant to
      look like — see bin/build-logo. 55.8rem is the width the type used to cap
      at, and 80vw tracks omarchy.org's proportion below that. */
-  .logo {
+  .banner {
+    background: none;
+    border: 0;
     color: var(--green);
+    cursor: pointer;
     display: block;
+    padding: 0;
     width: min(80vw, 55.8rem);
+    transition: color var(--transition);
+  }
+
+  .banner:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 0.5em;
+  }
+
+  .logo {
+    display: block;
     height: auto;
+    width: 100%;
   }
 
   /* Two lines are reserved whatever the tagline, so rotation never moves the
@@ -98,17 +118,20 @@
 
   @media (hover: hover) {
     a:hover { color: var(--white); }
+    .banner:hover { color: var(--accent); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .tagline { transition: none; }
+    body, .banner, .tagline { transition: none; }
   }
 </style>
 </head>
 <body>
+  <button class="banner" type="button" aria-label="Change colour scheme">
   <!-- logo:start -->
   <svg class="logo" viewBox="0 -113.125 55792.5 10070" role="img" aria-label="Oligarchy" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M557.5 546.875h600v660h-600zM1115 -113.125h3387.5v1320h-3387.5zM4460 546.875h600v660h-600zM6690 546.875h600v660h-600zM7247.5 -113.125h600v1320h-600zM12265 546.875h600v660h-600zM12822.5 -113.125h600v1320h-600zM16167.5 546.875h600v660h-600zM16725 -113.125h3387.5v1320h-3387.5zM20070 546.875h600v660h-600zM23415 546.875h600v660h-600zM23972.5 -113.125h4502.5v1320h-4502.5zM30662.5 546.875h600v660h-600zM31220 -113.125h4502.5v1320h-4502.5zM36795 546.875h600v660h-600zM37352.5 -113.125h4502.5v1320h-4502.5zM44042.5 546.875h600v660h-600zM44600 -113.125h600v1320h-600zM47387.5 -113.125h600v1320h-600zM47945 546.875h600v660h-600zM50732.5 546.875h600v660h-600zM51290 -113.125h1157.5v1320h-1157.5zM54077.5 546.875h600v660h-600zM0 980.625h1715v1320h-1715zM3902.5 980.625h1715v1320h-1715zM6132.5 980.625h1715v1320h-1715zM11707.5 980.625h1715v1320h-1715zM15610 980.625h1715v1320h-1715zM19512.5 980.625h1715v1320h-1715zM22857.5 980.625h1715v1320h-1715zM26760 980.625h1715v1320h-1715zM30105 980.625h1715v1320h-1715zM34007.5 980.625h1715v1320h-1715zM36237.5 980.625h1715v1320h-1715zM40140 980.625h1715v1320h-1715zM43485 980.625h1715v1320h-1715zM47387.5 980.625h1715v1320h-1715zM50732.5 980.625h1715v1320h-1715zM54077.5 980.625h1157.5v1320h-1157.5zM55192.5 1640.625h600v660h-600zM0 2074.375h1715v1320h-1715zM3902.5 2074.375h1715v1320h-1715zM6132.5 2074.375h1715v1320h-1715zM11707.5 2074.375h1715v1320h-1715zM13380 2074.375h300v1320h-300zM15610 2074.375h1715v1320h-1715zM19512.5 2074.375h600v1320h-600zM20070 2074.375h600v660h-600zM22857.5 2074.375h1715v1320h-1715zM26760 2074.375h1715v1320h-1715zM30105 2074.375h1715v1320h-1715zM34007.5 2074.375h1715v1320h-1715zM36237.5 2074.375h1715v1320h-1715zM40140 2074.375h600v1320h-600zM40697.5 2074.375h600v660h-600zM43485 2074.375h1715v1320h-1715zM47387.5 2074.375h1715v1320h-1715zM50732.5 2074.375h1715v1320h-1715zM52405 2734.375h1715v660h-1715zM54077.5 2074.375h1715v1320h-1715zM0 3168.125h1715v1320h-1715zM3902.5 3168.125h1715v1320h-1715zM6132.5 3168.125h1715v1320h-1715zM11707.5 3168.125h1715v1320h-1715zM13380 3168.125h300v1320h-300zM15052.5 3828.125h600v660h-600zM15610 3168.125h1715v1320h-1715zM22857.5 3168.125h1715v1320h-1715zM26760 3168.125h1715v1320h-1715zM29547.5 3828.125h600v660h-600zM30105 3168.125h1715v1320h-1715zM31777.5 3828.125h2272.5v660h-2272.5zM34007.5 3168.125h1157.5v1320h-1157.5zM35122.5 3168.125h600v660h-600zM36237.5 3168.125h1715v1320h-1715zM42927.5 3828.125h600v660h-600zM43485 3168.125h1715v1320h-1715zM45157.5 3828.125h2272.5v660h-2272.5zM47387.5 3168.125h1715v1320h-1715zM49060 3828.125h1157.5v660h-1157.5zM50732.5 3168.125h3387.5v660h-3387.5zM54077.5 3168.125h1715v1320h-1715zM0 4261.875h1715v1320h-1715zM3902.5 4261.875h1715v1320h-1715zM6132.5 4261.875h1715v1320h-1715zM11707.5 4261.875h1715v1320h-1715zM13380 4261.875h300v1320h-300zM14495 4261.875h1157.5v660h-1157.5zM15610 4261.875h1715v1320h-1715zM17840 4261.875h2272.5v1320h-2272.5zM20070 4921.875h600v660h-600zM21742.5 4261.875h600v660h-600zM22300 4261.875h6175v1320h-6175zM28990 4261.875h1157.5v660h-1157.5zM30105 4261.875h1715v1320h-1715zM31777.5 4261.875h2830v660h-2830zM36237.5 4261.875h1715v1320h-1715zM42370 4261.875h1157.5v660h-1157.5zM43485 4261.875h1715v1320h-1715zM45157.5 4261.875h2272.5v660h-2272.5zM47387.5 4261.875h1715v1320h-1715zM49060 4261.875h600v660h-600zM50732.5 4921.875h600v660h-600zM51290 4261.875h1157.5v1320h-1157.5zM54077.5 4261.875h1715v1320h-1715zM0 5355.625h1715v1320h-1715zM3902.5 5355.625h1715v1320h-1715zM6132.5 5355.625h1715v1320h-1715zM11707.5 5355.625h1715v1320h-1715zM15610 5355.625h1715v1320h-1715zM19512.5 5355.625h1715v1320h-1715zM22857.5 5355.625h1715v1320h-1715zM26760 5355.625h1715v1320h-1715zM28990 5355.625h600v660h-600zM29547.5 5355.625h6175v1320h-6175zM36237.5 5355.625h1715v1320h-1715zM40140 5355.625h600v1320h-600zM40697.5 6015.625h600v660h-600zM43485 5355.625h1715v1320h-1715zM47387.5 5355.625h1715v1320h-1715zM50732.5 5355.625h1715v1320h-1715zM54077.5 5355.625h1715v1320h-1715zM0 6449.375h1715v1320h-1715zM3902.5 6449.375h1715v1320h-1715zM6132.5 6449.375h1715v1320h-1715zM7805 6449.375h300v1320h-300zM10592.5 7109.375h600v660h-600zM11707.5 6449.375h1715v1320h-1715zM15610 6449.375h1715v1320h-1715zM19512.5 6449.375h1715v1320h-1715zM22857.5 6449.375h1715v1320h-1715zM26760 6449.375h1715v1320h-1715zM30105 6449.375h1715v1320h-1715zM34007.5 6449.375h1715v1320h-1715zM36237.5 6449.375h1715v1320h-1715zM40140 6449.375h1715v1320h-1715zM43485 6449.375h1715v1320h-1715zM47387.5 6449.375h1715v1320h-1715zM50732.5 6449.375h1715v1320h-1715zM54077.5 6449.375h1715v1320h-1715zM557.5 7543.125h600v660h-600zM1115 7543.125h3387.5v1320h-3387.5zM4460 7543.125h600v660h-600zM6132.5 7543.125h2830v1320h-2830zM8920 8203.125h1157.5v660h-1157.5zM10035 7543.125h1157.5v1320h-1157.5zM11707.5 7543.125h600v1320h-600zM12265 7543.125h600v660h-600zM15610 7543.125h4502.5v1320h-4502.5zM20070 7543.125h600v660h-600zM22857.5 7543.125h1715v1320h-1715zM26760 7543.125h600v1320h-600zM27317.5 7543.125h600v660h-600zM30105 7543.125h1715v1320h-1715zM34007.5 7543.125h1715v1320h-1715zM36237.5 7543.125h4502.5v1320h-4502.5zM40697.5 7543.125h600v660h-600zM43485 7543.125h1715v1320h-1715zM47387.5 7543.125h600v1320h-600zM47945 7543.125h600v660h-600zM51290 7543.125h600v660h-600zM51847.5 7543.125h2830v1320h-2830zM54635 7543.125h600v660h-600zM6132.5 8636.875h600v660h-600zM30105 8636.875h1715v1320h-1715zM34007.5 8636.875h1715v1320h-1715z"/></svg>
   <!-- logo:end -->
+  </button>
   <p class="tagline" aria-live="polite">Elite capital. Public code.</p>
   <a href="https://omarchy.org/">omarchy.org&nbsp;&rarr;</a>
   <script>
@@ -127,6 +150,52 @@
       "Your free operating system, brought to you by unreasonable amounts of money.",
       "Zero dollars. Several billionaires."
     ];
+
+    // name, mode, background, banner, tagline, link, link hover, banner hover
+    const themes = [
+      // themes:start
+      ["catppuccin","dark","#1e1e2e","#a6e3a1","#89b4fa","#94e2d5","#cdd6f4","#89b4fa"],
+      ["catppuccin-latte","light","#eff1f5","#40a02b","#1e66f5","#179299","#4c4f69","#1e66f5"],
+      ["ethereal","dark","#060b1e","#92a593","#7d82d9","#dfeaf0","#ffcead","#7d82d9"],
+      ["everforest","dark","#2d353b","#a7c080","#7fbbb3","#83c092","#d3c6aa","#7fbbb3"],
+      ["flexoki-light","light","#fffcf0","#879a39","#205ea6","#3aa99f","#100f0f","#205ea6"],
+      ["gruvbox","dark","#282828","#a9b665","#7daea3","#89b482","#d4be98","#7daea3"],
+      ["hackerman","dark","#0b0c16","#4fe88f","#829dd4","#d1fffe","#ddf7ff","#82fb9c"],
+      ["kanagawa","dark","#1f1f28","#76946a","#7e9cd8","#7aa89f","#dcd7ba","#dcd7ba"],
+      ["last-horizon","dark","#0c0b0c","#87a9b0","#b59790","#a5a0b6","#e2dddc","#b59790"],
+      ["lumon","dark","#16242d","#5e95bc","#6fb8e3","#d1eef8","#f2fcff","#8bc9eb"],
+      ["lupine","light","#fafafa","#4a2fd0","#3264eb","#3986ff","#000000","#3264eb"],
+      ["matte-black","dark","#121212","#ffc107","#e68e0d","#eaeaea","#bebebe","#e68e0d"],
+      ["miasma","dark","#222222","#5f875f","#78824b","#c9a554","#c2c2b0","#78824b"],
+      ["nord","dark","#2e3440","#a3be8c","#81a1c1","#8fbcbb","#d8dee9","#81a1c1"],
+      ["osaka-jade","dark","#111c18","#549e6a","#509475","#8cd3cb","#f7e8b2","#509475"],
+      ["retro-82","dark","#05182e","#028391","#3f8f8a","#8cbfb8","#f6dcac","#faa968"],
+      ["ristretto","dark","#2c2525","#adda78","#f38d70","#9bf1e1","#e6d9db","#f38d70"],
+      ["rose-pine","light","#faf4ed","#286983","#56949f","#d7827e","#575279","#56949f"],
+      ["solitude","dark","#101315","#9fa5a9","#798186","#707070","#a5aeb4","#798186"],
+      ["tokyo-night","dark","#1a1b26","#9ece6a","#7aa2f7","#0db9d7","#c0caf5","#7aa2f7"],
+      ["vantablack","dark","#000000","#b6b6b6","#8d8d8d","#b0b0b0","#ffffff","#8d8d8d"],
+      ["white","light","#ffffff","#3a3a3a","#1a1a1a","#3e3e3e","#000000","#6e6e6e"],
+      // themes:end
+    ];
+
+    const root = document.documentElement;
+    const themeColor = document.querySelector('meta[name=theme-color]');
+    // The stylesheet already paints tokyo-night, so the first click moves on
+    // from where the page starts rather than repainting it.
+    let current = themes.findIndex(theme => theme[0] === 'tokyo-night');
+
+    document.querySelector('.banner').addEventListener('click', () => {
+      const [, mode, background, green, blue, cyan, white, accent] =
+        themes[current = (current + 1) % themes.length];
+
+      root.style.colorScheme = mode;
+      for (const [name, color] of Object.entries(
+        { background, green, blue, cyan, white, accent })) {
+        root.style.setProperty('--' + name, color);
+      }
+      themeColor.content = background;
+    });
 
     const el = document.querySelector('.tagline');
     let i = Math.floor(Math.random() * taglines.length);
