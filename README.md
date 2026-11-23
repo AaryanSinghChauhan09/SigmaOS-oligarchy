@@ -1,4 +1,6 @@
-# oligarchy.fyi
+# fk-oligarchy
+
+> Forked from omacom/oligarchy (MIT). See `SIGMAOS_FORK.md`.
 
 A Cloudflare Worker serving one static page for `oligarchy.fyi`: the OLIGARCHY
 banner over a tagline that rotates through the pitch for Omarchy's patronage
