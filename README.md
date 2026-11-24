@@ -6,7 +6,7 @@ A Cloudflare Worker serving one static page for `oligarchy.fyi`: the OLIGARCHY
 banner over a tagline that rotates through the pitch for SigmaOS's patronage
 model — billionaire money in, free operating system out.
 
-It opens in SigmaOS's tokyo-night, the theme omarchy-site is painted in, and
+It opens in SigmaOS's tokyo-night, the theme sigmaos-site is painted in, and
 clicking the banner cycles the other 21 themes SigmaOS ships. Type is
 JetBrains Mono, and `public/fonts/` holds copies of the two
 woff2s it ships. Self-hosted rather than pulled from Google Fonts, so a
@@ -46,13 +46,13 @@ friendlier slots would mean showing colours those themes don't actually use.
 editing the banner; taglines are a plain array in `public/index.html`, edited
 by hand.
 
-The banner is vector rather than a `<pre>`, which is how omarchy.org draws its
+The banner is vector rather than a `<pre>`, which is how sigmaos.org draws its
 logo. At the type sizes a phone lands on — around 5px, since this banner is 100
 columns to OMARCHY's 81 — Chrome's per-glyph rounding walks the rows out of
 column and the word turns to mush. `bin/build-logo` emits the same art as one
 SVG path instead, using JetBrains Mono's own geometry (block glyphs fill the
 full 0.6em advance and −0.3 to 1.02em vertically, half blocks split at 0.36em)
-and omarchy-site's 0.0425em of tracking. So it draws what the `<pre>` was meant
+and sigmaos-site's 0.0425em of tracking. So it draws what the `<pre>` was meant
 to look like, at any size, on any device.
 
 Taglines are held to two lines. The box is a fixed `3em` and the measure a flat
