@@ -60,3 +60,8 @@ Taglines are held to two lines. The box is a fixed `3em` and the measure a flat
 rotation never moves anything on the page. A longer tagline than
 "Your free operating system…" (76 characters) breaks that and needs the measure
 rechecked.
+## Documentation
+
+Wiki documentation is available in the SigmaOS Wiki Staging repository:
+
+- [SigmaOS Wiki Staging](https://github.com/AaryanSinghChauhan09/sigmaos-wiki-staging#SigmaOS-oligarchy) - Full Wiki documentation for all SigmaOS components
