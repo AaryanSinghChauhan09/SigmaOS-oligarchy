@@ -1,13 +1,13 @@
 # fk-oligarchy
 
-> Forked from omacom/oligarchy (MIT). See `SIGMAOS_FORK.md`.
+> Forked from SigmaOS/oligarchy (MIT). See `SIGMAOS_FORK.md`.
 
 A Cloudflare Worker serving one static page for `oligarchy.fyi`: the OLIGARCHY
-banner over a tagline that rotates through the pitch for Omarchy's patronage
+banner over a tagline that rotates through the pitch for SigmaOS's patronage
 model — billionaire money in, free operating system out.
 
-It opens in Omarchy's tokyo-night, the theme omarchy-site is painted in, and
-clicking the banner cycles the other 21 themes Omarchy ships. Type is
+It opens in SigmaOS's tokyo-night, the theme omarchy-site is painted in, and
+clicking the banner cycles the other 21 themes SigmaOS ships. Type is
 JetBrains Mono, and `public/fonts/` holds copies of the two
 woff2s it ships. Self-hosted rather than pulled from Google Fonts, so a
 swapped fallback never reflows the page.
