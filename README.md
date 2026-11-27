@@ -28,7 +28,7 @@ still land on the joke.
 
 ## Colour schemes
 
-`bin/build-themes` reads every theme in `/usr/share/omarchy/themes` (pass
+`bin/build-themes` reads every theme in `/usr/share/sigmaos/themes` (pass
 another path as an argument) and inlines the palettes into
 `public/index.html`. Each theme's `colors.toml` maps onto the five colours the
 page uses: `background`, `green` for the banner, `blue` for the tagline,
@@ -48,7 +48,7 @@ by hand.
 
 The banner is vector rather than a `<pre>`, which is how sigmaos.org draws its
 logo. At the type sizes a phone lands on — around 5px, since this banner is 100
-columns to OMARCHY's 81 — Chrome's per-glyph rounding walks the rows out of
+columns to SIGMAOS's 81 — Chrome's per-glyph rounding walks the rows out of
 column and the word turns to mush. `bin/build-logo` emits the same art as one
 SVG path instead, using JetBrains Mono's own geometry (block glyphs fill the
 full 0.6em advance and −0.3 to 1.02em vertically, half blocks split at 0.36em)
